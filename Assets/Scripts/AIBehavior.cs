@@ -10,6 +10,7 @@ namespace Assets.Scripts
     {
         Standing = 0,
         WalkingLeft,
-        WalkingRight
+        WalkingRight,
+        Running
     }
 }
