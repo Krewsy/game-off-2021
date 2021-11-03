@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -7,19 +8,18 @@ using UnityEngine;
 /// </summary>
 public class CollisionManager : MonoBehaviour
 {
-    private Dictionary<Collider2D, Direction> collisions = new Dictionary<Collider2D, Direction>();
-    [SerializeField] private List<string> debugCollisions = new List<string>();
+    [SerializeField] private List<Collider2D> collisions = new List<Collider2D>();
 
-    // Start is called before the first frame update
-    void Start()
+    private Collider2D playerCollider;
+    void Awake()
     {
+        playerCollider = GetComponent<Collider2D>();
     }
 
     public void addCollision(Collision2D collision)
     {
-        collisions.Add(collision.collider, getCollisionDirection(collision));
-        debugCollisions.Add(GetComponent<Collider2D>().gameObject.tag + ": " + getCollisionDirection(collision));
-        
+        collisions.Add(collision.collider);
+
     }
 
     public void removeCollision(Collision2D collision)
@@ -27,45 +27,70 @@ public class CollisionManager : MonoBehaviour
         collisions.Remove(collision.collider);
     }
 
-    private Direction getCollisionDirection(Collision2D collision)
+    public List<Collider2D> getCollidersWithTag(string tag)
     {
-
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, collision.gameObject.transform.position,);
-
-        if (hit.collider != null)
-        {
-            Vector2 collisionPosition = hit.collider.gameObject.transform.position;
-            Debug.Log($"Player: {transform.position.x}, {transform.position.y}");
-            Debug.Log($"Collider: {collisionPosition.x}, {collisionPosition.y}");
-            float theta = Mathf.Atan2((transform.position.x - collisionPosition.x), (transform.position.y - collisionPosition.y));
-            Debug.Log("Angle: " + theta.ToString());
-
-        }
-
-
-
-        //foreach (ContactPoint2D c in collision.contacts)
-        //{
-        //    if (transform.position.x < c.point.x)
-        //    {
-        //        return Direction.Right;
-        //    }
-        //    else
-        //    {
-        //        return Direction.Left;
-        //    }
-        //}
-
-        return Direction.Left;
-
-
+        return collisions.Where(i => i.gameObject.tag == tag).ToList();
     }
 
-    // Update is called once per frame
-    // We probably won't use this
-    void Update()
+    public List<Collider2D> GetCollidersOfType<T>()
     {
-        
+        return collisions.Where(i => i.gameObject is T).ToList();
     }
+
+    // i will figure this out later if we need it but i think i can just work around it
+
+    //private Direction getCollisionDirection(Collision2D collision)
+    //{
+
+    //    // i wanted to do this differently but i got tired of messing with it so this will work for now
+    //    Bounds c_Bounds = collision.collider.bounds;
+    //    Vector2 collisionTopRight = new Vector2(c_Bounds.center.x + c_Bounds.extents.x, c_Bounds.center.y + c_Bounds.extents.y);
+    //    Vector2 collisionTopLeft = new Vector2(c_Bounds.center.x - c_Bounds.extents.x, c_Bounds.center.y + c_Bounds.extents.y);
+    //    Vector2 collisionBottomRight = new Vector2(c_Bounds.center.x + c_Bounds.extents.x, c_Bounds.center.y - c_Bounds.extents.y);
+    //    Vector2 collisionBottomLeft = new Vector2(c_Bounds.center.x - c_Bounds.extents.x, c_Bounds.center.y - c_Bounds.extents.y);
+
+    //    Bounds p_Bounds = playerCollider.bounds;
+    //    Vector2 playerTopRight = new Vector2(p_Bounds.center.x + p_Bounds.extents.x, p_Bounds.center.y + p_Bounds.extents.y);
+    //    Vector2 playerTopLeft = new Vector2(p_Bounds.center.x - p_Bounds.extents.x, p_Bounds.center.y + p_Bounds.extents.y);
+    //    Vector2 playerBottomRight = new Vector2(p_Bounds.center.x + p_Bounds.extents.x, p_Bounds.center.y - p_Bounds.extents.y);
+    //    Vector2 playerBottomLeft = new Vector2(p_Bounds.center.x - p_Bounds.extents.x, p_Bounds.center.y - p_Bounds.extents.y);
+
+    //    if (c_Bounds.center.x > p_Bounds.center.x)
+    //    {
+    //        if (collisionBottomLeft.x > playerBottomRight.x)
+    //        {
+    //            return Direction.Right;
+    //        }
+    //        else
+    //        {
+    //            if (collisionTopLeft.y < playerBottomLeft.y)
+    //            {
+    //                return Direction.Down;
+    //            }
+    //            else
+    //            {
+    //                return Direction.Up;
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (collisionBottomRight.x < playerBottomLeft.x)
+    //        {
+    //            return Direction.Left;
+    //        }
+    //        else
+    //        {
+    //            if (collisionTopLeft.y < playerBottomLeft.y)
+    //            {
+    //                return Direction.Down;
+    //            }
+    //            else
+    //            {
+    //                return Direction.Up;
+    //            }
+    //        }
+    //    }
+    //}
+
 }
