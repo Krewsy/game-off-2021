@@ -16,18 +16,18 @@ public class CollisionManager : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
     }
 
-    public void addCollision(Collision2D collision)
+    public void AddCollision(Collision2D collision)
     {
         collisions.Add(collision.collider);
 
     }
 
-    public void removeCollision(Collision2D collision)
+    public void RemoveCollision(Collision2D collision)
     {
         collisions.Remove(collision.collider);
     }
 
-    public List<Collider2D> getCollidersWithTag(string tag)
+    public List<Collider2D> GetCollidersWithTag(string tag)
     {
         return collisions.Where(i => i.gameObject.tag == tag).ToList();
     }
@@ -35,6 +35,11 @@ public class CollisionManager : MonoBehaviour
     public List<Collider2D> GetCollidersOfType<T>()
     {
         return collisions.Where(i => i.gameObject is T).ToList();
+    }
+
+    public List<Collider2D> GetColliders()
+    {
+        return collisions;
     }
 
     // i will figure this out later if we need it but i think i can just work around it
