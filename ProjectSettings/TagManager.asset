@@ -7,11 +7,12 @@ TagManager:
   - ground
   - wall
   - ceiling
+  - player
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Behind
   - Water
   - UI
   - 
@@ -41,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Behind
+    uniqueID: 1660194945
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

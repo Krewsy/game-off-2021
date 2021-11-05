@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (inputY != 0)
             {
-                body.rotation = (float)90;
+                //body.rotation = (float)90;
                 yv = inputY * speed;
                 isClimbing = true;
             }
