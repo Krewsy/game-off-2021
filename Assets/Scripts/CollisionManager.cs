@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ public class CollisionManager : MonoBehaviour
     {
         collisions.Add(collision.collider);
 
+    }
+
+    public void AddCollider(Collider2D collider)
+    {
+        collisions.Add(collider);
+    }
+
+    public void RemoveCollider(Collider2D collider)
+    {
+        collisions.Remove(collider);
     }
 
     public void RemoveCollision(Collision2D collision)
