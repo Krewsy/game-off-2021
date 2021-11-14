@@ -88,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
         // the old way would let us "climb" something we were standing on causing a bouncy effect... this should fix that
         bool canClimb = tempCollisions.Where(j => j.bounds.extents.y + j.bounds.center.y > playerCollider.bounds.center.y - playerCollider.bounds.extents.y).Any();
 
+        if (playerCollider.isTrigger)
+        {
+            canClimb = false;
+        }
+
         return canClimb;
     }
 
@@ -113,5 +118,10 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         collisionManager.RemoveCollision(collision);   
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        playerCollider.isTrigger = false;
     }
 }

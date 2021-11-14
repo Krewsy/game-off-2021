@@ -12,6 +12,7 @@ namespace Assets.Scripts
         WalkingLeft,
         WalkingRight,
         Running,
-        OnAlert
+        OnAlert,
+        Sleeping
     }
 }

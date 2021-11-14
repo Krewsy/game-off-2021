@@ -8,13 +8,16 @@ public class VisionRange : MonoBehaviour
     Rigidbody2D body;
     [SerializeField]bool chasePlayer;
     [SerializeField]Rigidbody2D targetBody;
-    int speed = 7;
+    private AIMovement aim;
+    int speed = 6;
     [SerializeField] int direction;
 
     // Start is called before the first frame update
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        aim = GetComponent<AIMovement>();
+
         chasePlayer = false;
     }
 
@@ -36,11 +39,11 @@ public class VisionRange : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // don't want to chase walls and shit
-        if (collision.gameObject.tag == "player")
+        if (collision.gameObject.tag == "player" && aim.currentActivity != Assets.Scripts.AIBehavior.Sleeping)
         {
             chasePlayer = true;
             targetBody = collision.gameObject.GetComponent<Rigidbody2D>();
-            Debug.Log("Chasing player!");
+            Debug.Log("Player In Vision!");
         }
         
     }

@@ -7,7 +7,7 @@ public class AIMovement : MonoBehaviour
 {
     [SerializeField]private bool isBusy;
     private Rigidbody2D body;
-    private AIBehavior currentActivity;
+    [SerializeField]public AIBehavior currentActivity;
     private float lastActivityTime;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class AIMovement : MonoBehaviour
             isBusy = false;
         }
 
-        if (!isBusy)
+        if (!isBusy && currentActivity != AIBehavior.Sleeping)
         {
             DetermineActivity();
         }
