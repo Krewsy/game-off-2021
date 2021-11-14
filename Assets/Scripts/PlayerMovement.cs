@@ -120,8 +120,9 @@ public class PlayerMovement : MonoBehaviour
         collisionManager.RemoveCollision(collision);   
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collider)
     {
         playerCollider.isTrigger = false;
+        collisionManager.RemoveCollider(collider);
     }
 }
